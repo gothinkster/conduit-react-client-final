@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "conduitReactClient",
+    "style": "sass",
+    "postcss": true
+  }
+}
