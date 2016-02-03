@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { routeActions } from 'redux-simple-router'
-import { AppBar, LeftNav, IconButton, MenuItem } from 'material-ui'
 import { logout } from '../actions/auth'
 
 const Header = ({ open, push, loggedIn, logout }) => {

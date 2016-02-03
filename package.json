@@ -69,7 +69,6 @@
     "history": "^1.17.0",
     "lodash": "^3.10.1",
     "marked": "^0.3.5",
-    "material-ui": "^0.14.3",
     "normalize.css": "^3.0.3",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",

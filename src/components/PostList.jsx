@@ -5,7 +5,7 @@ const PostList = ({ posts }) => {
   return (
     <div className="post-list">
       {posts.map((post)=>(
-        <div className="post-preview">
+        <div className="post-preview" key={post.slug}>
           <div className="post-meta">
             <Link to={'/'+post.author}>
               <img src="http://i.imgur.com/Qr71crq.jpg" />

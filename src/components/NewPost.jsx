@@ -1,103 +1,86 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { RaisedButton, FlatButton, TextField } from 'material-ui'
 import { update, create } from '../actions/posts'
 // import PostForm from './PostForm.jsx'
 
 class NewPost extends Component {
   constructor(props){
     super(props)
-    this.state = { tags: [] }
+    this.state = { post: { tag_list: [] } }
   }
   onSubmit(){
-    this.props.dispatch(create({
-      title: this.refs.postTitle.getValue(),
-      body: this.refs.postBody.getValue(),
-      tag_list: this.state.tags
-    }))
+    this.props.dispatch(create(this.state.post))
   }
 
-  addTag(){
-    this.setState({
-      tags: this.state.tags.concat([this.refs.tag.getValue()])
-    })
-
-    this.refs.tag.clearValue()
+  addTag(tag){
+    this.setState({post: Object.assign({}, this.state.post, {
+      tag_list: this.state.post.tag_list.concat([tag])
+    })})
   }
 
   removeTag(index){
-    this.setState({
-      tags: [
-        ...this.state.tags.slice(0, index),
-        ...this.state.tags.slice(index + 1)
+    this.setState({post: Object.assign({}, this.state.post, {
+      tag_list: [
+        ...this.state.post.tag_list.slice(0, index),
+        ...this.state.post.tag_list.slice(index + 1)
       ]
-    })
+    })})
+  }
+
+  handleTagKeyPress(e){
+    if(e.key === 'Enter'){
+      e.preventDefault()
+
+      this.addTag(e.target.value)
+      e.target.value = ''
+    }
+  }
+
+  handleChange(field, e){
+    let change = {}
+    change[field] = e.target.value
+
+    this.setState({post: Object.assign({}, this.state.post, change)})
   }
 
   render(){
     return (
-      <div>
-        <p>Create a new post</p>
-        <div className="post-form">
-          <div className="post-form-title">
-            <TextField
-              ref="postTitle"
-              hintText="Title"
-              onEnterKeyDown={this.onSubmit.bind(this)}
-            />
-          </div>
-          <div className="post-form-body">
-            <TextField
-              ref="postBody"
-              hintText="Tell your story..."
-              multiLine={true}
-              onEnterKeyDown={this.onSubmit.bind(this)}
-            />
-          </div>
-          <div className="post-tag-form">
-            <div className="tags">
-              {this.state.tags.map(function(tag, index){
-                return (
-                  <div key={index}>
-                    <span>{tag}</span>
-                    <RaisedButton
-                      label="x"
-                      primary={true}
-                      onTouchTap={this.removeTag.bind(this, index)}
-                    />
-                  </div>)
-              }.bind(this))}
+      <div className="editor-page">
+        <div className="container page">
+          <div className="row">
+
+            <div className="col-md-10 col-md-offset-1 col-xs-12">
+              <form onSubmit={this.onSubmit.bind(this)}>
+                <fieldset className="form-group">
+                  <input className="form-control form-control-lg" type="text" placeholder="Post Title" onChange={this.handleChange.bind(this, 'title')} />
+                </fieldset>
+                <fieldset className="form-group">
+                  <textarea className="form-control" rows="8" placeholder="Write your post (in markdown)" onChange={this.handleChange.bind(this, 'body')}></textarea>
+                </fieldset>
+                <fieldset className="form-group">
+                  <input className="form-control" type="text" placeholder="Enter tags" onKeyPress={this.handleTagKeyPress.bind(this)} />
+                  <div className="tag-list">
+                    {this.state.post.tag_list.map(function(tag, index){
+                      return(
+                        <span className="label label-pill label-default" key={index}>
+                          <i className="ion-close-round" onClick={this.removeTag.bind(this, index)} />
+                          {tag}
+                        </span>
+                      )
+                    }.bind(this))}
+                  </div>
+                </fieldset>
+                <button className="btn btn-lg btn-primary pull-xs-right" type="submit">
+                  Create Post
+                </button>
+              </form>
             </div>
-            <TextField
-              ref="tag"
-              hintText="Tags"
-              onEnterKeyDown={this.addTag.bind(this)}
-            />
-            <RaisedButton
-              label="Add Tag"
-              onTouchTap={this.addTag.bind(this)}
-            />
+
           </div>
-          <RaisedButton
-            label="Submit"
-            primary={true}
-            onTouchTap={this.onSubmit.bind(this)}
-          />
         </div>
       </div>
     )
   }
 }
-
-// export default connect()(PostForm)
-
-// const NewPost = ()=>{
-//   return (
-//     <div>
-//       <p>Create a new post</p>
-//       <PostForm action="new" />
-//     </div>
-//   )
-// }
 
 export default connect()(NewPost)

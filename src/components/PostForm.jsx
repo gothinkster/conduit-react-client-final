@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { RaisedButton, FlatButton, TextField } from 'material-ui'
 import { update, create } from '../actions/posts'
 
 class PostForm extends Component {

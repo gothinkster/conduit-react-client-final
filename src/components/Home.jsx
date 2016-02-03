@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { routeActions } from 'redux-simple-router'
 import { connect } from 'react-redux'
-import { RaisedButton } from 'material-ui'
 import Feed from './Feed.jsx'
 import PostList from './PostList.jsx'
 

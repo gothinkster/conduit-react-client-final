@@ -17,15 +17,15 @@ export function retrieveAll(){
 
 export function retrieveFeed(username){
   return function(dispatch, getState){
-    fetch('/api/posts?followed_by='+username).then(function(response){
-      if(response.status === 200){
-        return response.json()
+    fetch('/api/feed').then(function(response){
+      return response.json()
+    }).then(function({ posts }){
+      if(posts){
+        dispatch({
+          type: constants.RETRIEVE_FEED_POSTS_SUCCESS,
+          posts: posts
+        })
       }
-    }).then(function(body){
-      dispatch({
-        type: constants.RETRIEVE_ALL_POSTS_SUCCESS,
-        posts: body.posts
-      })
     })
   }
 }

@@ -1,61 +1,58 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { RaisedButton, TextField } from 'material-ui'
 import { update } from '../actions/profile'
 
 class EditProfile extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {user: {}}
+  }
+
+  handleChange(field, e){
+    let change = {}
+    change[field] = e.target.value
+
+    this.setState({user: Object.assign({}, this.state.user, change)})
+  }
+
   onSubmit(){
-    this.props.update({
-      username: this.refs.username.getValue(),
-      email: this.refs.email.getValue(),
-      image: this.refs.image.getValue(),
-      bio: this.refs.bio.getValue()
-    })
+    this.props.update(this.state.user)
   }
 
   render(){
     const { user } = this.props
 
     return (
-      <div className="profile-form">
-        <div className="profile-form-username">
-          <TextField
-            ref="username"
-            hintText="Username"
-            defaultValue={user.username}
-            floatingLabelText="Username"
-          />
+      <div className="settings-page">
+        <div className="container page">
+          <div className="row">
+
+            <div className="col-md-6 col-md-offset-3 col-xs-12">
+              <h1 className="text-xs-center">Your Settings</h1>
+
+              <form onSubmit={this.onSubmit.bind(this)}>
+                <fieldset className="form-group">
+                  <input className="form-control" type="text" placeholder="URL of profile picture" onChange={this.handleChange.bind(this, 'image')} defaultValue={user.image} />
+                </fieldset>
+                <fieldset className="form-group">
+                  <input className="form-control form-control-lg" type="text" placeholder="Username" onChange={this.handleChange.bind(this, 'username')} defaultValue={user.username} />
+                </fieldset>
+                <fieldset className="form-group">
+                  <textarea className="form-control form-control-lg" rows="8" placeholder="Short bio about you" onChange={this.handleChange.bind(this, 'bio')} defaultValue={user.bio}>
+                  </textarea>
+                </fieldset>
+                <fieldset className="form-group">
+                  <input className="form-control form-control-lg" type="text" placeholder="Email" onChange={this.handleChange.bind(this, 'email')} defaultValue={user.email} />
+                </fieldset>
+                <button className="btn btn-lg btn-primary pull-xs-right" type="submit">
+                  Update Profile
+                </button>
+              </form>
+            </div>
+
+          </div>
         </div>
-        <div className="profile-form-email">
-          <TextField
-            ref="email"
-            hintText="Email"
-            defaultValue={user.email}
-            floatingLabelText="Email"
-          />
-        </div>
-        <div className="profile-form-image">
-          <TextField
-            ref="image"
-            hintText="Image"
-            defaultValue={user.image}
-            floatingLabelText="Image"
-          />
-        </div>
-        <div className="profile-form-bio">
-          <TextField
-            ref="bio"
-            hintText="Bio"
-            defaultValue={user.bio}
-            floatingLabelText="Bio"
-            multiLine={true}
-          />
-        </div>
-        <RaisedButton
-          label="Update"
-          primary={true}
-          onTouchTap={this.onSubmit.bind(this)}
-        />
       </div>
     )
   }

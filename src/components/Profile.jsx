@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { RaisedButton } from 'material-ui'
 import { retrieve } from '../actions/profile'
 import { retrieveAuthorPosts } from '../actions/posts'
 import PostList from './PostList.jsx'
@@ -77,11 +76,3 @@ export default connect(
     retrieveProfile: retrieve,
   }
 )(Profile);
-
-
-// <div>
-//   <p>{this.props.profile.user.username}'s Profile!</p>
-//   <RaisedButton label="Follow" primary={true} />
-//   <h3>Posts by {this.props.profile.user.username} </h3>
-//   <PostList posts={this.props.profile.posts} />
-// </div>
