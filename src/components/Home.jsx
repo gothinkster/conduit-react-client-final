@@ -4,6 +4,7 @@ import { routeActions } from 'redux-simple-router'
 import { connect } from 'react-redux'
 import Feed from './Feed.jsx'
 import PostList from './PostList.jsx'
+import PopularTags from './PopularTags.jsx'
 
 const Home = ({ dispatch, posts, push, loggedIn }) => {
   return (
@@ -38,15 +39,7 @@ const Home = ({ dispatch, posts, push, loggedIn }) => {
             <div className="sidebar">
               <p>Popular Tags</p>
 
-              <div className="tag-list">
-                <a href="#" className="label label-pill label-default">programming</a>
-                <a href="#" className="label label-pill label-default">javascript</a>
-                <a href="#" className="label label-pill label-default">angularjs</a>
-                <a href="#" className="label label-pill label-default">react</a>
-                <a href="#" className="label label-pill label-default">mean</a>
-                <a href="#" className="label label-pill label-default">node</a>
-                <a href="#" className="label label-pill label-default">rails</a>
-              </div>
+              <PopularTags />
             </div>
           </div>
 

@@ -18,7 +18,7 @@ export function create(slug){
     }).then(function({ post }){
       if(post){
         dispatch({
-          type: constants.CREATE_POST_SUCCESS,
+          type: constants.CREATE_COMMENT_SUCCESS,
           post: post
         })
 
